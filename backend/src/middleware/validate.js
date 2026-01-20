@@ -15,4 +15,52 @@ const validate = (req, res, next) => {
   next();
 };
 
+/**
+ * Validate registration data
+ */
+export const validateRegister = (req, res, next) => {
+  const { name, email, password } = req.body;
+  const errors = [];
+
+  if (!name || name.trim().length === 0) {
+    errors.push('Name is required');
+  }
+
+  if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    errors.push('Valid email is required');
+  }
+
+  if (!password || password.length < 6) {
+    errors.push('Password must be at least 6 characters long');
+  }
+
+  if (errors.length > 0) {
+    throw new ApiError(400, errors.join(', '));
+  }
+
+  next();
+};
+
+/**
+ * Validate login data
+ */
+export const validateLogin = (req, res, next) => {
+  const { email, password } = req.body;
+  const errors = [];
+
+  if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    errors.push('Valid email is required');
+  }
+
+  if (!password || password.length === 0) {
+    errors.push('Password is required');
+  }
+
+  if (errors.length > 0) {
+    throw new ApiError(400, errors.join(', '));
+  }
+
+  next();
+};
+
 export default validate;

@@ -121,13 +121,13 @@ app.get('/api', (req, res) => {
 });
 
 // Import routes here (will be added in later phases)
-// import authRoutes from './routes/auth.routes.js';
+import authRoutes from './routes/authRoutes.js';
 // import tourRoutes from './routes/tour.routes.js';
 // import bookingRoutes from './routes/booking.routes.js';
 import visaRoutes from './routes/visaRoutes.js';
 
 // Use routes
-// app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 // app.use('/api/tours', tourRoutes);
 // app.use('/api/bookings', bookingRoutes);
 app.use('/api/visa', visaRoutes);
