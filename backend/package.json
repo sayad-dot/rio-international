@@ -10,7 +10,10 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "node prisma/seed.js"
+    "prisma:seed": "node prisma/seed-visa-extended.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed-visa-extended.js"
   },
   "keywords": [
     "travel",
