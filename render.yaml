@@ -1,0 +1,41 @@
+services:
+  # Backend API Service
+  - type: web
+    name: rio-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: cd backend && npm install && npx prisma generate
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rio-database
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://rio-frontend.onrender.com
+    healthCheckPath: /health
+
+  # Frontend Service
+  - type: web
+    name: rio-frontend
+    env: static
+    region: singapore
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://rio-backend.onrender.com/api
+
+# Database
+databases:
+  - name: rio-database
+    plan: free
+    region: singapore

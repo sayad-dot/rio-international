@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model bookings {
+  id                String        @id
+  bookingReference  String        @unique
+  userId            String
+  tourId            String
+  startDate         DateTime
+  endDate           DateTime
+  numberOfTravelers Int
+  totalPrice        Float
+  paymentStatus     PaymentStatus @default(PENDING)
+  bookingStatus     BookingStatus @default(PENDING)
+  travelers         Json
+  paymentMethod     String?
+  transactionId     String?
+  paidAmount        Float         @default(0)
+  specialRequests   String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime
+  tours             tours         @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  users             users         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model notifications {
+  id        String           @id
+  userId    String
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  link      String?
+  createdAt DateTime         @default(now())
+  users     users            @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model reviews {
+  id         String   @id
+  userId     String
+  tourId     String
+  rating     Int
+  title      String?
+  comment    String
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  tours      tours    @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  users      users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model tours {
+  id               String      @id
+  title            String
+  slug             String      @unique
+  description      String
+  shortDescription String?
+  destination      String
+  country          String
+  category         String
+  duration         Int
+  price            Float
+  discountPrice    Float?
+  maxGroupSize     Int         @default(10)
+  difficulty       Difficulty  @default(MODERATE)
+  inclusions       String[]
+  exclusions       String[]
+  itinerary        Json
+  highlights       String[]
+  coverImage       String
+  images           String[]
+  rating           Float       @default(0)
+  totalReviews     Int         @default(0)
+  isActive         Boolean     @default(true)
+  isFeatured       Boolean     @default(false)
+  isHajjUmrah      Boolean     @default(false)
+  metaTitle        String?
+  metaDescription  String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime
+  bookings         bookings[]
+  reviews          reviews[]
+  wishlists        wishlists[]
+}
+
+model users {
+  id             String          @id
+  email          String          @unique
+  password       String?
+  firstName      String
+  lastName       String
+  phone          String?
+  role           Role            @default(CUSTOMER)
+  emailVerified  Boolean         @default(false)
+  isActive       Boolean         @default(true)
+  profileImage   String?
+  dateOfBirth    DateTime?
+  nationality    String?
+  passportNumber String?
+  loyaltyPoints  Int             @default(0)
+  googleId       String?         @unique
+  provider       String?         @default("local")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime
+  bookings       bookings[]
+  notifications  notifications[]
+  reviews        reviews[]
+  wishlists      wishlists[]
+}
+
+model visa_packages {
+  id                 String   @id
+  country            String
+  slug               String   @unique
+  type               String
+  description        String
+  duration           String
+  processingTime     String
+  cost               Float
+  validity           String
+  entryType          String
+  requirements       String[]
+  documents          Json
+  applicationProcess String[]
+  faqs               Json
+  imageUrl           String
+  isPopular          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime
+}
+
+model wishlists {
+  id        String   @id
+  userId    String
+  tourId    String
+  createdAt DateTime @default(now())
+  tours     tours    @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tourId])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum Difficulty {
+  EASY
+  MODERATE
+  CHALLENGING
+}
+
+enum NotificationType {
+  BOOKING
+  PAYMENT
+  PROMOTION
+  SYSTEM
+}
+
+enum PaymentStatus {
+  PENDING
+  PARTIAL
+  COMPLETED
+  REFUNDED
+  FAILED
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+  AGENT
+}
