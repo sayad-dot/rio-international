@@ -311,9 +311,9 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section - Split Layout: 60% Visa, 40% Tours */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-gray-900">
+      <section className="relative min-h-screen w-full flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-gray-900">
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-hero-pattern" />
@@ -327,7 +327,7 @@ const HomePage = () => {
         <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl" />
 
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 py-20">
+        <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
             
             {/* Left Side - 60% VISA PROCESSING */}
