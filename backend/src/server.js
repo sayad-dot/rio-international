@@ -45,7 +45,8 @@ async function checkAndSeedDatabase() {
             applicationProcess: ["Submit documents", "Processing", "Receive visa"],
             faqs: [],
             imageUrl: `/images/${pkg.slug}.jpg`,
-            isPopular: pkg.isPopular
+            isPopular: pkg.isPopular,
+            updatedAt: new Date()
           }
         });
       }

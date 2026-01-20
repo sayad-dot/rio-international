@@ -85,7 +85,8 @@ app.post('/api/seed', async (req, res) => {
           applicationProcess: ["Submit documents", "Processing", "Receive visa"],
           faqs: [],
           imageUrl: `/images/${pkg.slug}.jpg`,
-          isPopular: pkg.isPopular
+          isPopular: pkg.isPopular,
+          updatedAt: new Date()
         }
       });
     }
