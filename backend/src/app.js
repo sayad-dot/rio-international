@@ -46,10 +46,9 @@ app.get('/health', (req, res) => {
 // Manual seed endpoint (temporary for debugging)
 app.post('/api/seed', async (req, res) => {
   try {
-    const count = await prisma.visa_packages.count();
-    if (count > 0) {
-      return res.json({ success: true, message: `Database already has ${count} packages`, count });
-    }
+    // Delete existing packages first
+    await prisma.visa_packages.deleteMany({});
+    console.log('Cleared existing packages');
 
     const packages = [
       // Tourist Visas (7)
