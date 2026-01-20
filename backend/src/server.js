@@ -27,8 +27,10 @@ async function checkAndSeedDatabase() {
       ];
 
       for (const pkg of packages) {
+        const id = Math.random().toString(36).substring(2) + Date.now().toString(36);
         await prisma.visa_packages.create({
           data: {
+            id: id,
             country: pkg.country,
             slug: pkg.slug,
             type: pkg.type,
