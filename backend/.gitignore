@@ -34,6 +34,4 @@ uploads/
 temp/
 
 # Prisma
-prisma/migrations/
-
 /src/generated/prisma
