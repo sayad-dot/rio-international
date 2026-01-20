@@ -25,14 +25,14 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-40">
+    <header className="bg-white shadow-md sticky top-0 z-40 w-full">
       {/* Top Bar */}
       <div className="bg-primary-700 text-white py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-          <div className="flex items-center gap-4">
-            <a href="tel:+8801XXXXXXXXX" className="flex items-center gap-2 hover:text-primary-200">
-              <Phone className="h-4 w-4" />
-              <span>+880 1XXX-XXXXXX</span>
+        <div className="container mx-auto px-2 sm:px-4 flex justify-between items-center text-xs sm:text-sm">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <a href="tel:+8801XXXXXXXXX" className="flex items-center gap-1 sm:gap-2 hover:text-primary-200">
+              <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden xs:inline">+880 1XXX-XXXXXX</span>
             </a>
           </div>
           <div className="hidden md:flex items-center gap-4">
@@ -42,11 +42,11 @@ const Header = () => {
       </div>
 
       {/* Main Navigation */}
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="text-2xl font-bold font-display">
+            <div className="text-lg sm:text-xl md:text-2xl font-bold font-display">
               <span className="text-primary-600">Rio</span>
               <span className="text-gray-800"> International</span>
             </div>
@@ -66,9 +66,9 @@ const Header = () => {
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center gap-4">
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-              <Search className="h-5 w-5 text-gray-600" />
+          <div className="flex items-center gap-2 sm:gap-4">
+            <button className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors">
+              <Search className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
             </button>
 
             {isAuthenticated ? (

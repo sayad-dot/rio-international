@@ -322,45 +322,45 @@ const HomePage = () => {
         {/* Elegant Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary-900/40 via-transparent to-gray-900/40" />
         
-        {/* Minimal Decorative Elements */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl" />
+        {/* Minimal Decorative Elements - Hide on small screens */}
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl hidden md:block" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary-500/10 rounded-full blur-3xl hidden md:block" />
 
         {/* Hero Content */}
-        <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-          <div className="grid lg:grid-cols-5 gap-12 items-center">
+        <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
             
             {/* Left Side - 60% VISA PROCESSING */}
-            <div className="lg:col-span-3 space-y-8">
+            <div className="lg:col-span-3 space-y-6 sm:space-y-8">
               {/* Main Headline */}
               <div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 sm:mb-6 leading-tight">
                   Your Gateway to World Travel
                 </h1>
                 <div className="max-w-2xl">
-                  <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-2">
+                  <p className="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed mb-2">
                     Expert visa processing for over 50+ countries.
                   </p>
-                  <p className="text-base md:text-lg text-gray-400 leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-400 leading-relaxed">
                     Fast, reliable, and hassle-free service you can trust.
                   </p>
                 </div>
               </div>
 
               {/* Visa Search Card - Beautiful Friendly Design */}
-              <div className="relative bg-gradient-to-br from-white via-white to-primary-50/30 rounded-3xl p-8 shadow-2xl border border-primary-100/50 overflow-hidden">
+              <div className="relative bg-gradient-to-br from-white via-white to-primary-50/30 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-primary-100/50 overflow-hidden">
                 {/* Decorative background elements */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary-200/20 to-primary-200/20 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent-200/20 to-secondary-200/20 rounded-full blur-2xl" />
                 
                 <div className="relative">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg">
-                      <Sparkles className="h-6 w-6 text-white" />
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                      <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">Start Your Journey</h3>
-                      <p className="text-sm text-gray-500">Find your perfect visa in seconds</p>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900">Start Your Journey</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">Find your perfect visa in seconds</p>
                     </div>
                   </div>
                   
@@ -378,11 +378,11 @@ const HomePage = () => {
                     {/* Visa Type */}
                     <div className="group">
                       <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-md z-10">
-                          <FileText className="h-5 w-5 text-white" />
+                        <div className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md z-10">
+                          <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                         </div>
                         <select 
-                          className="w-full pl-20 pr-12 py-4 bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-purple-300/30 focus:border-purple-400 outline-none transition-all duration-300 text-gray-800 font-medium cursor-pointer hover:border-purple-300 appearance-none"
+                          className="w-full pl-14 sm:pl-20 pr-10 sm:pr-12 py-3 sm:py-4 bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-purple-300/30 focus:border-purple-400 outline-none transition-all duration-300 text-gray-800 text-sm sm:text-base font-medium cursor-pointer hover:border-purple-300 appearance-none"
                           value={searchData.visaType}
                           onChange={(e) => setSearchData({...searchData, visaType: e.target.value})}
                         >
@@ -392,7 +392,7 @@ const HomePage = () => {
                           <option value="student">📚 Student Visa</option>
                           <option value="work">🏢 Work Permit</option>
                         </select>
-                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none rotate-90" />
+                        <ChevronRight className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400 pointer-events-none rotate-90" />
                       </div>
                     </div>
 
@@ -405,19 +405,19 @@ const HomePage = () => {
                         const queryString = params.toString();
                         navigate(`/visa-packages${queryString ? '?' + queryString : ''}`);
                       }}
-                      className="w-full bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 hover:from-primary-600 hover:via-primary-700 hover:to-primary-800 text-white px-8 py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-primary-500/40 hover:-translate-y-1 group mt-6"
+                      className="w-full bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 hover:from-primary-600 hover:via-primary-700 hover:to-primary-800 text-white px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-primary-500/40 hover:-translate-y-1 group mt-4 sm:mt-6"
                     >
-                      <Sparkles className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                      <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform" />
                       <span>Find My Visa</span>
-                      <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-2 transition-transform" />
                     </button>
                   </div>
 
                   {/* View All Link */}
-                  <div className="mt-6">
+                  <div className="mt-4 sm:mt-6">
                     <button 
                       onClick={() => navigate('/visa-packages')}
-                      className="w-full bg-gradient-to-br from-primary-50 to-white hover:from-primary-100 hover:to-primary-50 text-primary-700 border-2 border-primary-200 px-6 py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 group"
+                      className="w-full bg-gradient-to-br from-primary-50 to-white hover:from-primary-100 hover:to-primary-50 text-primary-700 border-2 border-primary-200 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 group"
                     >
                       View All Visa Packages
                       <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -452,41 +452,42 @@ const HomePage = () => {
               </div>
 
               {/* Trust Indicators */}
-              <div className="flex flex-wrap items-center gap-6 text-white/80">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-accent-400" />
-                  <span className="text-sm">Verified Agent</span>
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-6 text-white/80 text-xs sm:text-sm">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-accent-400" />
+                  <span>Verified Agent</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-accent-400" />
-                  <span className="text-sm">Secure Processing</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-accent-400" />
+                  <span>Secure Processing</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-accent-400" />
-                  <span className="text-sm">15+ Years Experience</span>
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5 text-accent-400" />
+                  <span className="hidden xs:inline">15+ Years Experience</span>
+                  <span className="xs:hidden">15+ Years</span>
                 </div>
               </div>
             </div>
 
             {/* Right Side - 40% TOUR PACKAGES */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="text-center lg:text-left mb-6">
-                <h2 className="text-3xl md:text-4xl font-display font-semibold text-white mb-3">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+              <div className="text-center lg:text-left mb-4 sm:mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-white mb-2 sm:mb-3">
                   Explore <span className="text-secondary-400">Tour Packages</span>
                 </h2>
-                <p className="text-gray-300">Premium travel experiences worldwide</p>
+                <p className="text-sm sm:text-base text-gray-300">Premium travel experiences worldwide</p>
               </div>
 
               {/* Featured Tours - Compact Cards */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {featuredTours.slice(0, 3).map((tour) => (
                   <div 
                     key={tour.id}
                     onClick={() => navigate(`/tours/${tour.id}`)}
-                    className="group bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-1"
+                    className="group bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-1"
                   >
-                    <div className="flex items-center gap-4 p-4">
-                      <div className="relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden">
+                    <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4">
+                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg sm:rounded-xl overflow-hidden">
                         <img 
                           src={tour.image} 
                           alt={tour.title}
@@ -496,25 +497,25 @@ const HomePage = () => {
                       </div>
                       
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 mb-1 truncate group-hover:text-primary-600 transition-colors">
+                        <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-1 truncate group-hover:text-primary-600 transition-colors">
                           {tour.title}
                         </h3>
-                        <p className="text-sm text-gray-500 mb-2 flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5" />
+                        <p className="text-xs sm:text-sm text-gray-500 mb-1.5 sm:mb-2 flex items-center gap-1">
+                          <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 flex-shrink-0" />
                           <span className="truncate">{tour.location}</span>
                         </p>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                            <span className="text-sm font-semibold text-gray-900">{tour.rating}</span>
+                            <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-amber-400 text-amber-400" />
+                            <span className="text-xs sm:text-sm font-semibold text-gray-900">{tour.rating}</span>
                           </div>
                           <div className="text-right">
-                            <span className="text-lg font-bold text-primary-600">৳{tour.price.toLocaleString()}</span>
+                            <span className="text-base sm:text-lg font-bold text-primary-600">৳{tour.price.toLocaleString()}</span>
                           </div>
                         </div>
                       </div>
                       
-                      <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all flex-shrink-0" />
                     </div>
                   </div>
                 ))}
@@ -522,10 +523,10 @@ const HomePage = () => {
 
               <button 
                 onClick={() => navigate('/tours')}
-                className="w-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white/30 px-6 py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 group"
+                className="w-full bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white/30 px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 group"
               >
                 View All Tour Packages
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
@@ -574,32 +575,32 @@ const HomePage = () => {
 
       {/* Visa Services Section - Premium Design */}
       <section id="visa-services" data-animate className="section-padding relative overflow-hidden bg-gradient-to-b from-white via-gray-50/50 to-white">
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary-100 px-5 py-2.5 rounded-full mb-6">
-              <FileText className="h-5 w-5 text-primary-600" />
-              <span className="text-primary-700 font-semibold text-sm tracking-wide uppercase">Visa Processing</span>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary-100 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full mb-4 sm:mb-6">
+              <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary-600" />
+              <span className="text-primary-700 font-semibold text-xs sm:text-sm tracking-wide uppercase">Visa Processing</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 text-gray-900 px-4">
               Professional <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">Visa Services</span>
             </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+            <p className="text-gray-600 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed px-4">
               Expert visa assistance for 50+ countries with 98% success rate. Fast processing, complete documentation support, and dedicated consultation.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {visaServices.map((service, idx) => (
               <div 
                 key={service.id}
                 onClick={() => {
                   navigate(`/visa-packages?type=${service.category}`);
                 }}
-                className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-gray-100"
+                className="group bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border border-gray-100"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 {/* Image Container */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-48 sm:h-56 overflow-hidden">
                   <img 
                     src={service.image} 
                     alt={service.title}
