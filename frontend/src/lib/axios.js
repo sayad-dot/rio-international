@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+// Log API URL for debugging
+console.log('=== API CONFIGURATION ===');
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('API_URL:', API_URL);
+console.log('Mode:', import.meta.env.MODE);
+
 // Create axios instance
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -30,6 +36,12 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Log the full error for debugging
+    console.error('=== API ERROR ===');
+    console.error('Message:', error.message);
+    console.error('Config:', error.config);
+    console.error('Response:', error.response);
+    
     if (error.response) {
       // Handle specific error codes
       switch (error.response.status) {
@@ -52,6 +64,10 @@ axiosInstance.interceptors.response.use(
         default:
           console.error('An error occurred');
       }
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('No response received from server');
+      console.error('Request:', error.request);
     }
     return Promise.reject(error);
   }
