@@ -47,9 +47,14 @@ const VisaDetailsPage = () => {
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Hero Header */}
             <div className="relative h-[400px]">
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${visa.imageUrl}')` }}
+                <img
+                    src={visa.imageUrl}
+                    alt={visa.country}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                        e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200';
+                        e.target.onerror = null; // Prevent infinite loop
+                    }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
 

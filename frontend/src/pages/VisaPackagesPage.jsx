@@ -31,9 +31,11 @@ const VisaPackagesPage = () => {
   }, [urlType, urlDestination]);
 
   // Fetch visa packages from API
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: ['visaPackages'],
-    queryFn: () => visaApi.getAllPackages()
+    queryFn: () => visaApi.getAllPackages(),
+    // Show stale data while refetching to prevent showing 0 packages
+    placeholderData: (previousData) => previousData,
   });
 
   // Debug logging
@@ -254,16 +256,25 @@ const VisaPackagesPage = () => {
 
           {/* Visa Packages Grid */}
           {isLoading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="h-10 w-10 text-primary-600 animate-spin" />
+            <div className="flex flex-col items-center justify-center py-20">
+              <Loader2 className="h-10 w-10 text-primary-600 animate-spin mb-4" />
+              <p className="text-gray-600">Loading visa packages...</p>
+              <p className="text-sm text-gray-500 mt-2">This may take a moment if the server is starting up</p>
             </div>
-          ) : error ? (
+          ) : isError ? (
             <div className="text-center py-20">
               <div className="w-24 h-24 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
                 <X className="h-10 w-10 text-red-500" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Failed to load visa packages</h3>
-              <p className="text-gray-500 mb-6">Please try again later</p>
+              <p className="text-gray-500 mb-2">{error?.message || 'Please try again later'}</p>
+              <p className="text-sm text-gray-400 mb-6">The server may be starting up. Please wait a moment and try again.</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all"
+              >
+                Retry
+              </button>
             </div>
           ) : filteredPackages.length === 0 ? (
             <div className="text-center py-20">
@@ -295,6 +306,10 @@ const VisaPackagesPage = () => {
                       src={pkg.image} 
                       alt={pkg.country}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={(e) => {
+                        e.target.src = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400';
+                        e.target.onerror = null; // Prevent infinite loop
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     

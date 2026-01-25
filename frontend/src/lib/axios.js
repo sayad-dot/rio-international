@@ -8,10 +8,10 @@ console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
 console.log('API_URL:', API_URL);
 console.log('Mode:', import.meta.env.MODE);
 
-// Create axios instance
+// Create axios instance with longer timeout for free-tier database wake-up
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 60000, // 60 seconds to handle database cold starts on free tier
   headers: {
     'Content-Type': 'application/json',
   },
@@ -32,10 +32,32 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response interceptor
+// Add retry logic for network failures and timeouts
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const config = error.config;
+    
+    // Retry logic for timeouts and network errors (max 2 retries)
+    if (!config.__retryCount) {
+      config.__retryCount = 0;
+    }
+    
+    // Retry on timeout or network errors (but not on 4xx/5xx errors)
+    const shouldRetry = (
+      (error.code === 'ECONNABORTED' || error.message.includes('timeout') || !error.response) &&
+      config.__retryCount < 2
+    );
+    
+    if (shouldRetry) {
+      config.__retryCount += 1;
+      console.log(`Retrying request (attempt ${config.__retryCount + 1}/3)...`);
+      
+      // Wait before retrying (exponential backoff)
+      await new Promise(resolve => setTimeout(resolve, 1000 * config.__retryCount));
+      return axiosInstance.request(config);
+    }
+    
     // Log the full error for debugging
     console.error('=== API ERROR ===');
     console.error('Message:', error.message);
