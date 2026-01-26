@@ -1,9 +1,9 @@
 const Card = ({ children, className = '', hover = false, onClick }) => {
-  const hoverClass = hover ? 'hover:shadow-xl hover:-translate-y-1 cursor-pointer' : '';
+  const hoverClass = hover ? 'hover:shadow-xl hover:-translate-y-1 hover:border-gray-200 cursor-pointer' : '';
   
   return (
     <div
-      className={`bg-white rounded-lg shadow-md transition-all duration-300 ${hoverClass} ${className}`}
+      className={`bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-300 ${hoverClass} ${className}`}
       onClick={onClick}
     >
       {children}
@@ -16,7 +16,7 @@ const CardHeader = ({ children, className = '' }) => {
 };
 
 const CardBody = ({ children, className = '' }) => {
-  return <div className={`p-6 ${className}`}>{children}</div>;
+  return <div className={`p-5 ${className}`}>{children}</div>;
 };
 
 const CardFooter = ({ children, className = '' }) => {
