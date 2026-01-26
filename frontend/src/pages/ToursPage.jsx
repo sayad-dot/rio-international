@@ -1,5 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { tourApi } from '../services/api/tourApi';
+import { TourPackageSkeletonGrid, LoadingBanner } from '../components/common/SkeletonLoader';
 import { 
   Search, MapPin, Calendar, Users, Star, Filter, 
   Clock, Heart, ChevronDown, Grid, List, X, 
@@ -231,6 +234,77 @@ const ToursPage = () => {
     }
   ];
 
+  // Fetch tours from API with smart loading strategy
+  const { data, isLoading, error, isError, isFetching } = useQuery({
+    queryKey: ['tours', filters.category, filters.sortBy],
+    queryFn: () => tourApi.getAllTours({
+      category: filters.category !== 'all' ? filters.category : undefined,
+      sortBy: filters.sortBy,
+      minPrice: filters.priceRange[0],
+      maxPrice: filters.priceRange[1]
+    }),
+    // Use static data as placeholder for instant render
+    placeholderData: {
+      data: {
+        tours: allTours.map(tour => ({
+          id: tour.id,
+          title: tour.title,
+          slug: tour.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+          destination: tour.location,
+          country: tour.country,
+          duration: tour.durationDays,
+          price: tour.price,
+          discountPrice: tour.originalPrice,
+          rating: tour.rating,
+          totalReviews: tour.reviews,
+          coverImage: tour.image,
+          category: tour.category,
+          isFeatured: tour.badge === 'Popular',
+          inclusions: tour.includes,
+          shortDescription: tour.description,
+        }))
+      }
+    },
+    staleTime: 1000 * 60 * 5, // Consider fresh for 5 minutes
+    gcTime: 1000 * 60 * 30, // Keep in cache for 30 minutes
+  });
+
+  // Track slow loading for better UX feedback
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
+  
+  useEffect(() => {
+    if (isLoading || isFetching) {
+      // Show loading banner after 2 seconds of loading
+      const timer = setTimeout(() => setIsSlowLoading(true), 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsSlowLoading(false);
+    }
+  }, [isLoading, isFetching]);
+
+  // Map API data to frontend format, or use static data as fallback
+  const apiTours = data?.data?.tours?.map(tour => ({
+    id: tour.id,
+    title: tour.title,
+    location: tour.destination,
+    country: tour.country,
+    duration: `${tour.duration} Days`,
+    durationDays: tour.duration,
+    price: tour.price,
+    originalPrice: tour.discountPrice,
+    rating: tour.rating,
+    reviews: tour.totalReviews,
+    image: tour.coverImage,
+    category: tour.category,
+    badge: tour.isFeatured ? 'Popular' : 'Available',
+    badgeColor: tour.isFeatured ? 'from-rose-500 to-pink-500' : 'from-blue-500 to-indigo-500',
+    includes: tour.inclusions || [],
+    description: tour.shortDescription || tour.description || ''
+  })) || [];
+
+  // Use API data (which includes placeholderData for instant render)
+  const displayTours = apiTours.length > 0 ? apiTours : allTours;
+
   const categories = [
     { id: 'all', name: 'All Tours', icon: Grid },
     { id: 'beach', name: 'Beach & Island', icon: Building },
@@ -257,7 +331,7 @@ const ToursPage = () => {
 
   // Filter and sort tours
   const filteredTours = useMemo(() => {
-    let result = [...allTours];
+    let result = [...displayTours];
 
     // Search filter
     if (searchQuery) {
@@ -313,7 +387,7 @@ const ToursPage = () => {
     }
 
     return result;
-  }, [searchQuery, filters]);
+  }, [displayTours, searchQuery, filters]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -520,7 +594,13 @@ const ToursPage = () => {
               </div>
 
               {/* Tours Grid/List */}
-              {filteredTours.length === 0 ? (
+              {/* Loading Banner for slow loads */}
+              {isSlowLoading && <LoadingBanner message="Fetching latest tour packages..." />}
+              
+              {/* Show skeletons only on initial load (no cached/placeholder data) */}
+              {isLoading && !data ? (
+                <TourPackageSkeletonGrid count={6} viewMode={viewMode} />
+              ) : filteredTours.length === 0 ? (
                 <div className="text-center py-20">
                   <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
                     <Search className="h-10 w-10 text-gray-400" />

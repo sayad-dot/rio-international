@@ -7,6 +7,7 @@ import {
   Clock, Shield, Users, MapPin, TrendingUp, Heart,
   ArrowRight, Check, X, Filter, Search, Loader2
 } from 'lucide-react';
+import { VisaPackageSkeletonGrid, LoadingBanner } from '../components/common/SkeletonLoader';
 
 const VisaPackagesPage = () => {
   const navigate = useNavigate();
@@ -223,23 +224,37 @@ const VisaPackagesPage = () => {
     }
   ];
 
-  // Fetch visa packages from API
-  const { data, isLoading, error, isError } = useQuery({
+  // Fetch visa packages from API with smart loading strategy
+  const { data, isLoading, error, isError, isFetching } = useQuery({
     queryKey: ['visaPackages'],
     queryFn: () => visaApi.getAllPackages(),
-    // Show stale data while refetching to prevent showing 0 packages
-    placeholderData: (previousData) => previousData,
+    // Use static data as placeholder for instant render (no flash of loading state)
+    placeholderData: {
+      data: {
+        packages: staticVisaPackages.map(pkg => ({
+          ...pkg,
+          processingTime: pkg.processing,
+          cost: pkg.price,
+          imageUrl: pkg.image,
+        }))
+      }
+    },
+    staleTime: 1000 * 60 * 5, // Consider fresh for 5 minutes
+    gcTime: 1000 * 60 * 30, // Keep in cache for 30 minutes
   });
 
-  // Debug logging
+  // Track slow loading for better UX feedback
+  const [isSlowLoading, setIsSlowLoading] = useState(false);
+  
   useEffect(() => {
-    console.log('=== VISA PACKAGES DEBUG ===');
-    console.log('isLoading:', isLoading);
-    console.log('error:', error);
-    console.log('data:', data);
-    console.log('packages:', data?.data?.packages);
-    console.log('packages length:', data?.data?.packages?.length);
-  }, [data, isLoading, error]);
+    if (isLoading || isFetching) {
+      // Show loading banner after 2 seconds of loading
+      const timer = setTimeout(() => setIsSlowLoading(true), 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsSlowLoading(false);
+    }
+  }, [isLoading, isFetching]);
 
   // Map backend data to frontend format, or use static fallback
   const apiPackages = data?.data?.packages?.map(pkg => ({
@@ -292,9 +307,9 @@ const VisaPackagesPage = () => {
     { id: 'evisa', name: 'eVisa', icon: FileText },
   ];
 
-  // SMART FALLBACK: Use API data if available, otherwise use static data (never show empty!)
-  const visaPackages = apiPackages && apiPackages.length > 0 ? apiPackages : staticVisaPackages;
-  const displayPackages = visaPackages;
+  // Use API data (which includes placeholderData for instant render)
+  // This ensures we NEVER show 0 packages - either placeholder or real data
+  const displayPackages = apiPackages.length > 0 ? apiPackages : staticVisaPackages;
 
   const filteredPackages = displayPackages.filter(pkg => {
     const matchesCategory = selectedCategory === 'all' || pkg.category === selectedCategory;
@@ -448,9 +463,14 @@ const VisaPackagesPage = () => {
             </p>
           </div>
 
+          {/* Loading Banner for slow loads */}
+          {isSlowLoading && <LoadingBanner message="Fetching latest visa packages..." />}
+
           {/* Visa Packages Grid */}
-          {/* NEVER show loading - always show static data immediately! */}
-          {isError && displayPackages.length === 0 ? (
+          {/* Show skeletons only on initial load (no cached/placeholder data) */}
+          {isLoading && !data ? (
+            <VisaPackageSkeletonGrid count={6} />
+          ) : isError && displayPackages.length === 0 ? (
             <div className="text-center py-20">
               <div className="w-24 h-24 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
                 <X className="h-10 w-10 text-red-500" />
