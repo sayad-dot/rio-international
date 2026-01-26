@@ -467,7 +467,7 @@ const visaPackages = [
                 answer: "No, family members need separate visitor visa applications." 
             }
         ],
-        imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200",
+        imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200",
         isPopular: false
     },
     {
@@ -566,7 +566,7 @@ const visaPackages = [
                 answer: "Must show 1st year tuition + living expenses (typically $40,000-80,000 USD)." 
             }
         ],
-        imageUrl: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200",
+        imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200",
         isPopular: true
     },
     {
@@ -726,7 +726,7 @@ const visaPackages = [
                 answer: "1 year tuition + £1,334/month × 9 months (London) or £1,023/month (outside London)." 
             }
         ],
-        imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200",
+        imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200",
         isPopular: false
     },
 

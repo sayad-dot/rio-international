@@ -30,6 +30,199 @@ const VisaPackagesPage = () => {
     }
   }, [urlType, urlDestination]);
 
+  // STATIC FALLBACK DATA (like Tours page) - Always available instantly
+  const staticVisaPackages = [
+    {
+      slug: "thailand-tourist-visa",
+      country: "Thailand",
+      type: "Tourist Visa",
+      duration: "60 Days",
+      processing: "5-7 Working Days",
+      price: 8500,
+      validity: "3 Months",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1200",
+      isPopular: true,
+      description: "Explore the Land of Smiles with hassle-free tourist visa processing. Perfect for vacation and sightseeing.",
+      requirements: ["Valid Passport", "2 Passport Photos", "Flight Tickets", "Hotel Booking"],
+      rating: 4.8,
+      reviews: 234,
+      flagEmoji: "🇹🇭",
+      badge: "Popular",
+      badgeColor: "from-rose-500 to-pink-500",
+      features: ["60 Days Stay", "Multiple Entry", "Fast Processing", "Tourist Activities"],
+      category: "tourist"
+    },
+    {
+      slug: "dubai-tourist-visa",
+      country: "United Arab Emirates",
+      type: "Tourist Visa (30 Days)",
+      duration: "30 Days",
+      processing: "3-4 Working Days",
+      price: 12000,
+      validity: "60 Days from Issue",
+      entry: "Single Entry",
+      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200",
+      isPopular: true,
+      description: "Experience luxury shopping, desert safaris, and iconic landmarks in Dubai and UAE.",
+      requirements: ["Valid Passport", "2 Passport Photos", "Flight Tickets", "Hotel Confirmation"],
+      rating: 4.7,
+      reviews: 189,
+      flagEmoji: "🇦🇪",
+      badge: "Hot Deal",
+      badgeColor: "from-orange-500 to-red-500",
+      features: ["30 Days Stay", "Fast Processing", "Shopping Paradise", "Desert Safari"],
+      category: "tourist"
+    },
+    {
+      slug: "malaysia-tourist-visa",
+      country: "Malaysia",
+      type: "Tourist eVisa",
+      duration: "30 Days",
+      processing: "3-5 Working Days",
+      price: 6500,
+      validity: "3 Months",
+      entry: "Single Entry",
+      image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1200",
+      isPopular: true,
+      description: "Visit Kuala Lumpur, Penang, and beautiful Malaysian islands with easy eVisa processing.",
+      requirements: ["Valid Passport", "Digital Photo", "Flight Booking", "Hotel Confirmation"],
+      rating: 4.6,
+      reviews: 156,
+      flagEmoji: "🇲🇾",
+      badge: "eVisa",
+      badgeColor: "from-green-500 to-emerald-500",
+      features: ["Online Processing", "30 Days Stay", "Quick Approval", "No Embassy Visit"],
+      category: "evisa"
+    },
+    {
+      slug: "singapore-tourist-visa",
+      country: "Singapore",
+      type: "Tourist Visa",
+      duration: "30 Days",
+      processing: "4-5 Working Days",
+      price: 9000,
+      validity: "2 Months",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200",
+      isPopular: false,
+      description: "Explore the Lion City with its modern attractions, Gardens by the Bay, and diverse culture.",
+      requirements: ["Valid Passport", "2 Photos", "Bank Statement", "Flight Tickets"],
+      rating: 4.5,
+      reviews: 98,
+      flagEmoji: "🇸🇬",
+      badge: "Available",
+      badgeColor: "from-blue-500 to-indigo-500",
+      features: ["30 Days Stay", "Multiple Entry", "Modern City", "Safe Travel"],
+      category: "tourist"
+    },
+    {
+      slug: "uk-student-visa",
+      country: "United Kingdom",
+      type: "Student Visa (Tier 4)",
+      duration: "Duration of Course",
+      processing: "30-45 Working Days",
+      price: 45000,
+      validity: "Course Duration + 4 months",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200",
+      isPopular: true,
+      description: "Study at world-renowned UK universities. Tier 4 visa with work rights and post-study opportunities.",
+      requirements: ["CAS Letter", "Passport", "IELTS Score", "Financial Proof", "TB Test"],
+      rating: 4.9,
+      reviews: 276,
+      flagEmoji: "🇬🇧",
+      badge: "Popular",
+      badgeColor: "from-violet-500 to-purple-500",
+      features: ["Work Rights (20hrs/week)", "Post-Study Visa", "World-Class Education", "NHS Access"],
+      category: "student"
+    },
+    {
+      slug: "canada-student-visa",
+      country: "Canada",
+      type: "Study Permit",
+      duration: "Duration of Course",
+      processing: "30-60 Working Days",
+      price: 50000,
+      validity: "Course Duration + 90 days",
+      entry: "Multiple Entry (with eTA)",
+      image: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=1200",
+      isPopular: true,
+      description: "Study in Canada with top-ranked universities. Work permit included during and after studies.",
+      requirements: ["LOA from DLI", "GIC", "Passport", "IELTS", "Medical Exam", "Police Certificate"],
+      rating: 4.8,
+      reviews: 312,
+      flagEmoji: "🇨🇦",
+      badge: "Hot Deal",
+      badgeColor: "from-red-500 to-rose-500",
+      features: ["Work Permit (20hrs/week)", "PGWP Available", "PR Pathway", "Quality Education"],
+      category: "student"
+    },
+    {
+      slug: "usa-business-visa",
+      country: "United States",
+      type: "Business Visa (B-1)",
+      duration: "180 Days",
+      processing: "30-45 Working Days",
+      price: 35000,
+      validity: "10 Years",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=1200",
+      isPopular: false,
+      description: "Attend business meetings, conferences, and negotiations in the United States.",
+      requirements: ["DS-160 Form", "Passport", "Business Invitation", "Company Documents", "Interview"],
+      rating: 4.4,
+      reviews: 87,
+      flagEmoji: "🇺🇸",
+      badge: "Available",
+      badgeColor: "from-blue-500 to-indigo-500",
+      features: ["10 Years Validity", "Multiple Entry", "180 Days Stay", "Business Activities"],
+      category: "business"
+    },
+    {
+      slug: "turkey-evisa",
+      country: "Turkey",
+      type: "Tourist eVisa",
+      duration: "30 Days",
+      processing: "24-48 Hours",
+      price: 7500,
+      validity: "180 Days",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1200",
+      isPopular: false,
+      description: "Instant eVisa approval for visiting Istanbul, Cappadocia, and Turkish Riviera.",
+      requirements: ["Passport Copy", "Digital Photo", "Email Address"],
+      rating: 4.7,
+      reviews: 143,
+      flagEmoji: "🇹🇷",
+      badge: "Fast",
+      badgeColor: "from-amber-500 to-orange-500",
+      features: ["24-48 Hours", "Online Processing", "Multiple Entry", "No Embassy Visit"],
+      category: "evisa"
+    },
+    {
+      slug: "india-work-visa",
+      country: "India",
+      type: "Employment Visa",
+      duration: "1 Year (extendable)",
+      processing: "10-15 Working Days",
+      price: 18000,
+      validity: "1 Year",
+      entry: "Multiple Entry",
+      image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200",
+      isPopular: false,
+      description: "Work legally in India with employment visa for contract and full-time positions.",
+      requirements: ["Employment Contract", "Company Registration", "Passport", "Educational Certificates"],
+      rating: 4.3,
+      reviews: 67,
+      flagEmoji: "🇮🇳",
+      badge: "Available",
+      badgeColor: "from-blue-500 to-indigo-500",
+      features: ["1 Year Validity", "Extendable", "Multiple Entry", "Legal Employment"],
+      category: "work"
+    }
+  ];
+
   // Fetch visa packages from API
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ['visaPackages'],
@@ -48,8 +241,8 @@ const VisaPackagesPage = () => {
     console.log('packages length:', data?.data?.packages?.length);
   }, [data, isLoading, error]);
 
-  // Map backend data to frontend format
-  const visaPackages = data?.data?.packages?.map(pkg => ({
+  // Map backend data to frontend format, or use static fallback
+  const apiPackages = data?.data?.packages?.map(pkg => ({
     slug: pkg.slug,
     country: pkg.country,
     type: pkg.type,
@@ -99,8 +292,9 @@ const VisaPackagesPage = () => {
     { id: 'evisa', name: 'eVisa', icon: FileText },
   ];
 
-  // Use the API data if available, otherwise use empty array
-  const displayPackages = isLoading ? [] : visaPackages;
+  // SMART FALLBACK: Use API data if available, otherwise use static data (never show empty!)
+  const visaPackages = apiPackages && apiPackages.length > 0 ? apiPackages : staticVisaPackages;
+  const displayPackages = visaPackages;
 
   const filteredPackages = displayPackages.filter(pkg => {
     const matchesCategory = selectedCategory === 'all' || pkg.category === selectedCategory;
@@ -255,13 +449,8 @@ const VisaPackagesPage = () => {
           </div>
 
           {/* Visa Packages Grid */}
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-20">
-              <Loader2 className="h-10 w-10 text-primary-600 animate-spin mb-4" />
-              <p className="text-gray-600">Loading visa packages...</p>
-              <p className="text-sm text-gray-500 mt-2">This may take a moment if the server is starting up</p>
-            </div>
-          ) : isError ? (
+          {/* NEVER show loading - always show static data immediately! */}
+          {isError && displayPackages.length === 0 ? (
             <div className="text-center py-20">
               <div className="w-24 h-24 mx-auto mb-6 bg-red-100 rounded-full flex items-center justify-center">
                 <X className="h-10 w-10 text-red-500" />
