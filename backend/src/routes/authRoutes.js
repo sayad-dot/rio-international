@@ -7,6 +7,7 @@ import {
   updateProfile,
   changePassword,
   verifyEmail,
+  adminRegister,
 } from '../controllers/authController.js';
 import { protect } from '../middleware/auth.js';
 import { validateRegister, validateLogin } from '../middleware/validate.js';
@@ -16,6 +17,9 @@ const router = express.Router();
 // Public routes
 router.post('/register', validateRegister, register);
 router.post('/login', validateLogin, login);
+
+// Admin registration (public but requires employee ID)
+router.post('/admin/register', adminRegister);
 
 // Protected routes
 router.use(protect); // All routes below this are protected

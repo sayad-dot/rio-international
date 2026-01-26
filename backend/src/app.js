@@ -12,10 +12,12 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
+// CORS configuration - Allow both common Vite ports for flexibility
 const allowedOrigins = [
   'https://rio-frontend.onrender.com',
   'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
   'http://localhost:3000'
 ];
 
@@ -141,12 +143,14 @@ import authRoutes from './routes/authRoutes.js';
 import tourRoutes from './routes/tourRoutes.js';
 // import bookingRoutes from './routes/booking.routes.js';
 import visaRoutes from './routes/visaRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tours', tourRoutes);
 // app.use('/api/bookings', bookingRoutes);
 app.use('/api/visa', visaRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 404 handler
 app.use(notFound);

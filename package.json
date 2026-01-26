@@ -1,10 +1,21 @@
 {
+  "name": "rio-international",
+  "version": "1.0.0",
+  "description": "Rio International Travel Agency - Full Stack Application",
   "scripts": {
-    "dev": "npm run dev:backend & npm run dev:frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" --names \"BACKEND,FRONTEND\" --prefix-colors \"bgBlue.bold,bgMagenta.bold\"",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
+    "start": "npm run dev",
     "install:all": "npm run install:backend && npm run install:frontend",
     "install:backend": "cd backend && npm install",
-    "install:frontend": "cd frontend && npm install"
+    "install:frontend": "cd frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:seed": "cd backend && npx prisma db seed",
+    "db:studio": "cd backend && npx prisma studio"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

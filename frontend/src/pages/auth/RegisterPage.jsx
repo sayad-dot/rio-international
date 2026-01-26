@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, User, Phone, Eye, EyeOff, ArrowRight, Plane, Shield, Check } from 'lucide-react';
+import { Mail, Lock, User, Phone, Eye, EyeOff, ArrowRight, Plane, Shield, Check, Building2 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const RegisterPage = () => {
@@ -340,6 +340,27 @@ const RegisterPage = () => {
                 className="block w-full py-4 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all text-center"
               >
                 Sign In Instead
+              </Link>
+
+              {/* Admin Registration Link */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-200"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-4 bg-white text-gray-500">Employee?</span>
+                </div>
+              </div>
+
+              <Link 
+                to="/auth/admin/register"
+                className="block w-full py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all text-center group"
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Building2 className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <span>Register as Admin</span>
+                  <Shield className="h-4 w-4" />
+                </div>
               </Link>
             </form>
           </div>

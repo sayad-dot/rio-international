@@ -314,3 +314,91 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   res.json(new ApiResponse(200, null, 'Email verified successfully'));
 });
+
+/**
+ * @desc    Register a new admin/employee
+ * @route   POST /api/auth/admin/register
+ * @access  Public (but requires valid employee ID)
+ */
+export const adminRegister = asyncHandler(async (req, res) => {
+  const { employeeId, firstName, lastName, email, phone, password } = req.body;
+
+  // Validation
+  if (!employeeId || !firstName || !lastName || !email || !password) {
+    throw new ApiError(400, 'Please provide all required fields');
+  }
+
+  if (password.length < 6) {
+    throw new ApiError(400, 'Password must be at least 6 characters long');
+  }
+
+  // For now, we'll use a simple validation
+  // In production, you would validate against a database of valid employee IDs
+  // or an HR system API
+  const validEmployeeIdPattern = /^EMP-\d{4}$/i;
+  
+  if (!validEmployeeIdPattern.test(employeeId)) {
+    throw new ApiError(400, 'Invalid employee ID format. Must be EMP-XXXX');
+  }
+
+  // Check if user already exists
+  const existingUser = await prisma.users.findUnique({
+    where: { email: email.toLowerCase() },
+  });
+
+  if (existingUser) {
+    throw new ApiError(400, 'User with this email already exists');
+  }
+
+  // Check if employee ID is already used (we'll store it in a custom field later)
+  // For now, we'll proceed with registration
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  // Create admin user
+  const user = await prisma.users.create({
+    data: {
+      id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      firstName,
+      lastName,
+      phone: phone || null,
+      role: 'ADMIN', // Default role for employees
+      emailVerified: false,
+      isActive: true,
+      updatedAt: new Date(),
+    },
+    select: {
+      id: true,
+      email: true,
+      firstName: true,
+      lastName: true,
+      phone: true,
+      role: true,
+      emailVerified: true,
+      profileImage: true,
+      createdAt: true,
+    },
+  });
+
+  // Generate token
+  const token = generateToken(user.id);
+
+  // Set cookie
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: config.nodeEnv === 'production',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    sameSite: 'strict',
+  });
+
+  res.status(201).json(
+    new ApiResponse(201, {
+      user,
+      token,
+    }, 'Admin account registered successfully')
+  );
+});

@@ -7,7 +7,7 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 
 // Layouts
 import MainLayout from './components/layout/MainLayout';
-import AdminLayout from './components/layout/AdminLayout';
+import AdminLayout from './components/admin/AdminLayout';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -19,9 +19,18 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
+import AdminLoginPage from './pages/auth/AdminLoginPage';
+import AdminRegisterPage from './pages/auth/AdminRegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import BookingsPage from './pages/BookingsPage';
-import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminBookingsPage from './pages/admin/AdminBookingsPage';
+import AdminToursPage from './pages/admin/AdminToursPage';
+import AdminVisaPage from './pages/admin/AdminVisaPage';
+import AdminReviewsPage from './pages/admin/AdminReviewsPage';
+import AdminCustomersPage from './pages/admin/AdminCustomersPage';
+import AdminEmployeesPage from './pages/admin/AdminEmployeesPage';
+import AdminSettingsPage from './pages/admin/AdminSettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Protected Route Component
@@ -67,6 +76,10 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
             </Route>
 
+            {/* Admin Auth Routes (No Layout) */}
+            <Route path="/auth/admin/login" element={<AdminLoginPage />} />
+            <Route path="/auth/admin/register" element={<AdminRegisterPage />} />
+
             {/* Protected User Routes */}
             <Route
               path="/profile"
@@ -89,7 +102,15 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<AdminDashboard />} />
+              <Route path="dashboard" element={<AdminDashboardPage />} />
+              <Route path="bookings" element={<AdminBookingsPage />} />
+              <Route path="tours" element={<AdminToursPage />} />
+              <Route path="visa" element={<AdminVisaPage />} />
+              <Route path="reviews" element={<AdminReviewsPage />} />
+              <Route path="customers" element={<AdminCustomersPage />} />
+              <Route path="employees" element={<AdminEmployeesPage />} />
+              <Route path="settings" element={<AdminSettingsPage />} />
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
             </Route>
 
             {/* 404 */}

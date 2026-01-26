@@ -111,6 +111,8 @@ model users {
   notifications  notifications[]
   reviews        reviews[]
   wishlists      wishlists[]
+  contact_inquiries contact_inquiries[]
+  activity_logs     activity_logs[]
 }
 
 model visa_packages {
@@ -145,6 +147,43 @@ model wishlists {
   @@unique([userId, tourId])
 }
 
+model contact_inquiries {
+  id          String        @id
+  name        String
+  email       String
+  phone       String?
+  subject     String
+  message     String
+  status      InquiryStatus @default(PENDING)
+  assignedTo  String?
+  response    String?
+  respondedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  assignedUser users? @relation(fields: [assignedTo], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model activity_logs {
+  id        String   @id
+  userId    String
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([entity])
+}
+
 enum BookingStatus {
   PENDING
   CONFIRMED
@@ -156,6 +195,13 @@ enum Difficulty {
   EASY
   MODERATE
   CHALLENGING
+}
+
+enum InquiryStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
 }
 
 enum NotificationType {
@@ -176,5 +222,6 @@ enum PaymentStatus {
 enum Role {
   CUSTOMER
   ADMIN
+  SUPER_ADMIN
   AGENT
 }
