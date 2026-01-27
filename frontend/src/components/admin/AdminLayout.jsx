@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, Package, Plane, FileText, Users,
   MessageSquare, Settings, LogOut, Menu, X, ChevronRight,
-  Shield, Bell, Search, Briefcase
+  Shield, Bell, Search, Briefcase, Globe
 } from 'lucide-react';
 import Button from '../common/Button';
 
@@ -167,6 +167,15 @@ const AdminLayout = () => {
             </button>
 
             <div className="flex items-center gap-4">
+              {/* Visit Website Button */}
+              <button
+                onClick={() => navigate('/')}
+                className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 rounded-lg transition-all shadow-sm hover:shadow-md"
+              >
+                <Globe className="w-4 h-4" />
+                Visit Website
+              </button>
+
               {/* Search */}
               <div className="hidden md:flex items-center gap-2 bg-gray-50 rounded-lg px-4 py-2 w-80">
                 <Search className="w-4 h-4 text-gray-400" />

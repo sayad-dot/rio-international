@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut, ShoppingBag, Search, Phone, ChevronDown, Plane, FileText, Building, Hotel, Compass, Briefcase, Users } from 'lucide-react';
+import { Menu, X, User, LogOut, ShoppingBag, Search, Phone, ChevronDown, Plane, FileText, Building, Hotel, Compass, Briefcase, Users, Shield } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../common/Button';
 
@@ -10,7 +10,7 @@ const Header = () => {
   const [otherServicesOpen, setOtherServicesOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -136,6 +136,17 @@ const Header = () => {
             >
               <Search className="h-5 w-5 text-gray-600 group-hover:text-primary-600 group-hover:scale-110 transition-all" />
             </button>
+
+            {/* Admin Dashboard Button - Only for Admins */}
+            {isAuthenticated && isAdmin && (
+              <button
+                onClick={() => navigate('/admin/dashboard')}
+                className="hidden lg:flex items-center gap-2 px-4 py-2.5 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 font-medium transition-all duration-300 rounded-xl shadow-md hover:shadow-lg"
+              >
+                <Shield className="h-4 w-4" />
+                Admin Dashboard
+              </button>
+            )}
 
             {isAuthenticated ? (
               <div className="relative">
