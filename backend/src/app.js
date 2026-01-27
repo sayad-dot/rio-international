@@ -144,6 +144,7 @@ import tourRoutes from './routes/tourRoutes.js';
 // import bookingRoutes from './routes/booking.routes.js';
 import visaRoutes from './routes/visaRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import careerRoutes from './routes/careerRoutes.js';
 
 // Use routes
 app.use('/api/auth', authRoutes);
@@ -151,6 +152,7 @@ app.use('/api/tours', tourRoutes);
 // app.use('/api/bookings', bookingRoutes);
 app.use('/api/visa', visaRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/jobs', careerRoutes);
 
 // 404 handler
 app.use(notFound);

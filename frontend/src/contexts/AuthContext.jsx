@@ -20,22 +20,38 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     
+    console.log('🔐 AuthContext - Initializing...');
+    console.log('Token exists:', !!token);
+    console.log('Stored user exists:', !!storedUser);
+    
     if (token && storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        console.log('✅ User loaded:', parsedUser);
+        console.log('User role:', parsedUser.role);
+        setUser(parsedUser);
       } catch (error) {
-        console.error('Error parsing user data:', error);
+        console.error('❌ Error parsing user data:', error);
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       }
+    } else {
+      console.log('ℹ️ No token or user found in localStorage');
     }
     setLoading(false);
   }, []);
 
   const login = async (email, password) => {
     try {
+      console.log('🔑 Attempting login for:', email);
       const response = await axiosInstance.post('/auth/login', { email, password });
+      console.log('📥 Login response:', response.data);
+      
       const { token, user } = response.data.data;
+      
+      console.log('✅ Login successful');
+      console.log('Token:', token?.substring(0, 20) + '...');
+      console.log('User:', user);
       
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
@@ -43,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true, user };
     } catch (error) {
+      console.error('❌ Login failed:', error.response?.data || error.message);
       return {
         success: false,
         error: error.response?.data?.message || 'Login failed',

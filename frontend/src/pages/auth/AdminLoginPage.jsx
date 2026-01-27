@@ -30,21 +30,32 @@ const AdminLoginPage = () => {
     setLoading(true);
 
     try {
+      console.log('🔐 Admin login form submitted');
       const result = await login(formData.email, formData.password);
+      console.log('📥 Login result:', result);
 
       if (result.success) {
+        console.log('✅ Login successful, user:', result.user);
         // Check if user is admin or super admin
         if (result.user.role === 'ADMIN' || result.user.role === 'SUPER_ADMIN') {
-          navigate('/admin');
+          console.log('✅ User is admin, navigating to /admin/dashboard');
+          
+          // Small delay to ensure localStorage is set
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+          navigate('/admin/dashboard', { replace: true });
         } else {
+          console.log('❌ User is not admin, role:', result.user.role);
           setError('Access denied. Admin credentials required.');
           setLoading(false);
         }
       } else {
+        console.log('❌ Login failed:', result.error);
         setError(result.error || 'Invalid credentials');
         setLoading(false);
       }
     } catch (err) {
+      console.error('❌ Exception during login:', err);
       setError('An error occurred. Please try again.');
       setLoading(false);
     }

@@ -225,3 +225,54 @@ enum Role {
   SUPER_ADMIN
   AGENT
 }
+
+model Job {
+  id              String           @id @default(cuid())
+  title           String
+  department      String
+  type            String           // Full-time, Part-time, Contract
+  location        String
+  salary          String           // e.g., "৳30,000 - ৳50,000"
+  description     String           @db.Text
+  requirements    String[]         // Array of requirements
+  responsibilities String[]        // Array of responsibilities
+  benefits        String[]         // Array of benefits
+  isActive        Boolean          @default(true)
+  positions       Int              @default(1) // Number of open positions
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  applications    JobApplication[]
+
+  @@index([isActive])
+  @@map("jobs")
+}
+
+model JobApplication {
+  id              String            @id @default(cuid())
+  jobId           String
+  name            String
+  email           String
+  phone           String
+  experience      String            // e.g., "3 years"
+  coverLetter     String            @db.Text
+  resumeUrl       String?           // Optional: URL to uploaded resume
+  status          ApplicationStatus @default(PENDING)
+  notes           String?           @db.Text // Admin notes
+  appliedAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  job             Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+  @@index([status])
+  @@index([email])
+  @@map("job_applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  SHORTLISTED
+  INTERVIEW_SCHEDULED
+  REJECTED
+  ACCEPTED
+}

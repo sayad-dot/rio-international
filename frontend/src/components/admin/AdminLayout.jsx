@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, Package, Plane, FileText, Users,
   MessageSquare, Settings, LogOut, Menu, X, ChevronRight,
-  Shield, Bell, Search
+  Shield, Bell, Search, Briefcase
 } from 'lucide-react';
 import Button from '../common/Button';
 
@@ -33,6 +33,13 @@ const AdminLayout = () => {
         { icon: FileText, label: 'Visa Packages', path: '/admin/visa' },
         { icon: MessageSquare, label: 'Reviews', path: '/admin/reviews' },
         { icon: Users, label: 'Customers', path: '/admin/customers' },
+      ]
+    },
+    {
+      title: 'Career',
+      items: [
+        { icon: Briefcase, label: 'Job Postings', path: '/admin/career/jobs' },
+        { icon: FileText, label: 'Applications', path: '/admin/career/applications' },
       ]
     },
   ];

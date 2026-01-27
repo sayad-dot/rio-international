@@ -34,13 +34,24 @@ import AdminReviewsPage from './pages/admin/AdminReviewsPage';
 import AdminCustomersPage from './pages/admin/AdminCustomersPage';
 import AdminEmployeesPage from './pages/admin/AdminEmployeesPage';
 import AdminSettingsPage from './pages/admin/AdminSettingsPage';
+import AdminJobsPage from './pages/admin/AdminJobsPage';
+import AdminApplicationsPage from './pages/admin/AdminApplicationsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, adminOnly = false }) => {
-  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const { isAuthenticated, isAdmin, loading, user } = useAuth();
+
+  console.log('🛡️ ProtectedRoute check:', {
+    loading,
+    isAuthenticated,
+    isAdmin,
+    adminOnly,
+    userRole: user?.role
+  });
 
   if (loading) {
+    console.log('⏳ Still loading auth state...');
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
@@ -49,13 +60,16 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
   }
 
   if (!isAuthenticated) {
+    console.log('❌ Not authenticated - redirecting to login');
     return <Navigate to="/login" replace />;
   }
 
   if (adminOnly && !isAdmin) {
+    console.log('❌ Not admin - redirecting to home');
     return <Navigate to="/" replace />;
   }
 
+  console.log('✅ Access granted');
   return children;
 };
 
@@ -115,6 +129,8 @@ function App() {
               <Route path="reviews" element={<AdminReviewsPage />} />
               <Route path="customers" element={<AdminCustomersPage />} />
               <Route path="employees" element={<AdminEmployeesPage />} />
+              <Route path="career/jobs" element={<AdminJobsPage />} />
+              <Route path="career/applications" element={<AdminApplicationsPage />} />
               <Route path="settings" element={<AdminSettingsPage />} />
               <Route index element={<Navigate to="/admin/dashboard" replace />} />
             </Route>

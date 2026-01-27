@@ -22,12 +22,18 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Get token from localStorage
     const token = localStorage.getItem('token');
+    console.log(`📤 API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    console.log('   Token exists:', !!token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log('   Token attached:', token.substring(0, 30) + '...');
+    } else {
+      console.warn('   ⚠️ NO TOKEN FOUND IN LOCALSTORAGE');
     }
     return config;
   },
   (error) => {
+    console.error('❌ Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
@@ -60,6 +66,9 @@ axiosInstance.interceptors.response.use(
     
     // Log the full error for debugging
     console.error('=== API ERROR ===');
+    console.error('URL:', error.config?.url);
+    console.error('Method:', error.config?.method);
+    console.error('Status:', error.response?.status);
     console.error('Message:', error.message);
     console.error('Config:', error.config);
     console.error('Response:', error.response);
@@ -69,9 +78,30 @@ axiosInstance.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           // Unauthorized - clear token and redirect to login
+          console.error('🚫 401 Unauthorized - Token invalid or expired');
+          
+          // Check if user was admin before clearing storage
+          const storedUser = localStorage.getItem('user');
+          let isAdminUser = false;
+          if (storedUser) {
+            try {
+              const user = JSON.parse(storedUser);
+              isAdminUser = user.role === 'ADMIN' || user.role === 'SUPER_ADMIN';
+            } catch (e) {
+              console.error('Error parsing stored user:', e);
+            }
+          }
+          
+          // Clear auth data
           localStorage.removeItem('token');
           localStorage.removeItem('user');
-          window.location.href = '/login';
+          
+          // Redirect to appropriate login page
+          const currentPath = window.location.pathname;
+          if (!currentPath.includes('/login') && !currentPath.includes('/auth')) {
+            const redirectUrl = isAdminUser ? '/auth/admin/login' : '/login';
+            window.location.href = redirectUrl;
+          }
           break;
         case 403:
           // Forbidden

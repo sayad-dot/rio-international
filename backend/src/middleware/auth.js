@@ -26,7 +26,7 @@ export const protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, config.jwt.secret);
 
     // Get user from database
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
       where: { id: decoded.id },
       select: {
         id: true,
@@ -49,6 +49,7 @@ export const protect = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
+    console.error('Auth middleware error:', error.message);
     throw new ApiError(401, 'Not authorized to access this route');
   }
 });

@@ -1,16 +1,38 @@
-import { useState } from 'react';
-import { Briefcase, MapPin, Clock, DollarSign, Send, Users, TrendingUp, Award, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Briefcase, MapPin, Clock, DollarSign, Send, Users, TrendingUp, Award, Heart, X, CheckCircle } from 'lucide-react';
 import Button from '../components/common/Button';
+import { careerService } from '../services/careerService';
 
 const CareerPage = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
   const [applicationData, setApplicationData] = useState({
     name: '',
     email: '',
     phone: '',
-    position: '',
     experience: '',
     coverLetter: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async () => {
+    try {
+      setLoading(true);
+      const response = await careerService.getJobs();
+      setJobs(response.data || []);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setApplicationData({
@@ -19,10 +41,41 @@ const CareerPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleApplyClick = (job) => {
+    setSelectedJob(job);
+    setShowApplicationModal(true);
+    setSubmitSuccess(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle application submission
-    console.log('Application data:', applicationData);
+    
+    if (!selectedJob) return;
+
+    try {
+      setSubmitting(true);
+      await careerService.applyForJob(selectedJob.id, applicationData);
+      
+      setSubmitSuccess(true);
+      setApplicationData({
+        name: '',
+        email: '',
+        phone: '',
+        experience: '',
+        coverLetter: ''
+      });
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        setShowApplicationModal(false);
+        setSubmitSuccess(false);
+      }, 2000);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      alert(error.response?.data?.message || 'Failed to submit application. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const benefits = [
@@ -45,41 +98,6 @@ const CareerPage = () => {
       icon: Users,
       title: 'Great Team',
       description: 'Work with passionate and talented professionals'
-    }
-  ];
-
-  const openPositions = [
-    {
-      title: 'Travel Consultant',
-      type: 'Full-time',
-      location: 'Dhaka, Bangladesh',
-      salary: '৳30,000 - ৳50,000',
-      description: 'Help clients plan their dream vacations and manage travel bookings.',
-      requirements: ['2+ years experience in travel industry', 'Excellent communication skills', 'Knowledge of visa processing']
-    },
-    {
-      title: 'Visa Processing Officer',
-      type: 'Full-time',
-      location: 'Dhaka, Bangladesh',
-      salary: '৳25,000 - ৳40,000',
-      description: 'Process visa applications and assist clients with documentation.',
-      requirements: ['1+ years experience in visa processing', 'Attention to detail', 'Knowledge of international visa requirements']
-    },
-    {
-      title: 'Tour Operations Manager',
-      type: 'Full-time',
-      location: 'Dhaka, Bangladesh',
-      salary: '৳40,000 - ৳60,000',
-      description: 'Manage tour operations, coordinate with partners, and ensure customer satisfaction.',
-      requirements: ['3+ years experience in tour operations', 'Leadership skills', 'Strong organizational abilities']
-    },
-    {
-      title: 'Customer Service Representative',
-      type: 'Full-time',
-      location: 'Dhaka, Bangladesh',
-      salary: '৳20,000 - ৳35,000',
-      description: 'Provide excellent customer service and support to our clients.',
-      requirements: ['Experience in customer service', 'Good communication skills', 'Problem-solving abilities']
     }
   ];
 
@@ -143,60 +161,85 @@ const CareerPage = () => {
             <p className="text-gray-600 text-lg">Find your perfect role and start your journey with us</p>
           </div>
 
-          <div className="grid gap-6 max-w-4xl mx-auto">
-            {openPositions.map((position, idx) => (
-              <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{position.title}</h3>
-                    <p className="text-gray-600 mb-4">{position.description}</p>
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4 text-primary-600" />
-                        {position.type}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4 text-primary-600" />
-                        {position.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <DollarSign className="h-4 w-4 text-primary-600" />
-                        {position.salary}
-                      </span>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+              <p className="mt-4 text-gray-600">Loading positions...</p>
+            </div>
+          ) : jobs.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No open positions at the moment. Please check back later!</p>
+            </div>
+          ) : (
+            <div className="grid gap-6 max-w-4xl mx-auto">
+              {jobs.map((job) => (
+                <div key={job.id} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{job.title}</h3>
+                      <p className="text-gray-600 mb-4">{job.description}</p>
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-4 w-4 text-primary-600" />
+                          {job.type}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4 text-primary-600" />
+                          {job.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <DollarSign className="h-4 w-4 text-primary-600" />
+                          {job.salary}
+                        </span>
+                      </div>
                     </div>
+                    <Button onClick={() => handleApplyClick(job)} className="md:w-auto">Apply Now</Button>
                   </div>
-                  <Button className="md:w-auto">Apply Now</Button>
+                  {job.requirements && job.requirements.length > 0 && (
+                    <div className="pt-4 border-t">
+                      <h4 className="font-semibold text-gray-900 mb-2">Requirements:</h4>
+                      <ul className="space-y-1">
+                        {job.requirements.map((req, i) => (
+                          <li key={i} className="text-gray-600 text-sm flex items-start gap-2">
+                            <span className="text-primary-600 mt-1">•</span>
+                            {req}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-                <div className="pt-4 border-t">
-                  <h4 className="font-semibold text-gray-900 mb-2">Requirements:</h4>
-                  <ul className="space-y-1">
-                    {position.requirements.map((req, i) => (
-                      <li key={i} className="text-gray-600 text-sm flex items-start gap-2">
-                        <span className="text-primary-600 mt-1">•</span>
-                        {req}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Application Form */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Submit Your <span className="text-primary-600">Application</span>
-              </h2>
-              <p className="text-gray-600 text-lg">Fill out the form below and we'll get back to you soon</p>
+      {/* Application Modal */}
+      {showApplicationModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-300">
+            <div className="p-6 border-b sticky top-0 bg-white z-10">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold text-gray-900">Apply for {selectedJob?.title}</h3>
+                <button
+                  onClick={() => setShowApplicationModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="h-5 w-5 text-gray-500" />
+                </button>
+              </div>
+              <p className="text-gray-600 mt-2">{selectedJob?.department} • {selectedJob?.type}</p>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            {submitSuccess ? (
+              <div className="p-8 text-center">
+                <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Application Submitted!</h3>
+                <p className="text-gray-600">Thank you for applying. We'll review your application and get back to you soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="p-6 space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -242,24 +285,6 @@ const CareerPage = () => {
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Position *
-                    </label>
-                    <select
-                      name="position"
-                      value={applicationData.position}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-primary-100 focus:border-primary-500 outline-none transition-all"
-                      required
-                    >
-                      <option value="">Select position</option>
-                      {openPositions.map((pos, idx) => (
-                        <option key={idx} value={pos.title}>{pos.title}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Years of Experience *
                     </label>
                     <input
@@ -289,15 +314,28 @@ const CareerPage = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full py-4 text-lg">
-                  Submit Application
-                  <Send className="ml-2 h-5 w-5" />
-                </Button>
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowApplicationModal(false)}
+                    className="flex-1"
+                    disabled={submitting}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="flex-1" disabled={submitting}>
+                    {submitting ? 'Submitting...' : 'Submit Application'}
+                    {!submitting && <Send className="ml-2 h-5 w-5" />}
+                  </Button>
+                </div>
               </form>
-            </div>
+            )}
           </div>
         </div>
-      </section>
+      )}
+
+      {/* Old Application Form Section - Removed */}
     </div>
   );
 };

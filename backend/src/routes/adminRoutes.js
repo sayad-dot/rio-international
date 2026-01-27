@@ -8,6 +8,7 @@ import * as tourController from '../controllers/admin/tourController.js';
 import * as visaController from '../controllers/admin/visaController.js';
 import * as reviewController from '../controllers/admin/reviewController.js';
 import * as customerController from '../controllers/admin/customerController.js';
+import * as careerController from '../controllers/careerController.js';
 
 const router = express.Router();
 
@@ -64,5 +65,17 @@ router.delete('/reviews/:id', reviewController.deleteReview);
 // ============================
 router.get('/customers', customerController.getAllCustomers);
 router.get('/customers/:id', customerController.getCustomerById);
+
+// ============================
+// Career Management Routes
+// ============================
+router.get('/jobs', careerController.getAllJobsAdmin);
+router.post('/jobs', careerController.createJob);
+router.put('/jobs/:id', careerController.updateJob);
+router.delete('/jobs/:id', careerController.deleteJob);
+
+router.get('/applications', careerController.getAllApplications);
+router.get('/applications/:id', careerController.getApplicationById);
+router.patch('/applications/:id', careerController.updateApplicationStatus);
 
 export default router;
