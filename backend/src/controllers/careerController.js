@@ -104,6 +104,9 @@ const applyForJob = asyncHandler(async (req, res) => {
 // @route   GET /api/admin/jobs
 // @access  Private/Admin
 const getAllJobsAdmin = asyncHandler(async (req, res) => {
+  console.log('📋 Admin fetching all jobs...');
+  console.log('User:', req.user);
+  
   const jobs = await prisma.job.findMany({
     orderBy: { createdAt: 'desc' },
     include: {
@@ -113,6 +116,7 @@ const getAllJobsAdmin = asyncHandler(async (req, res) => {
     }
   });
 
+  console.log(`✅ Found ${jobs.length} jobs`);
   res.json(new ApiResponse(200, jobs, 'Jobs fetched successfully'));
 });
 
@@ -120,6 +124,10 @@ const getAllJobsAdmin = asyncHandler(async (req, res) => {
 // @route   POST /api/admin/jobs
 // @access  Private/Admin
 const createJob = asyncHandler(async (req, res) => {
+  console.log('📝 Admin creating new job...');
+  console.log('User:', req.user);
+  console.log('Body:', req.body);
+  
   const {
     title,
     department,
@@ -154,6 +162,7 @@ const createJob = asyncHandler(async (req, res) => {
     }
   });
 
+  console.log('✅ Job created:', job.id);
   res.status(201).json(
     new ApiResponse(201, job, 'Job created successfully')
   );
