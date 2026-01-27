@@ -55,7 +55,12 @@ export const AuthProvider = ({ children }) => {
       
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      
+      // Update state synchronously and wait for React to process it
       setUser(user);
+      
+      // Small delay to ensure state is updated before navigation
+      await new Promise(resolve => setTimeout(resolve, 50));
       
       return { success: true, user };
     } catch (error) {

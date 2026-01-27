@@ -39,10 +39,7 @@ const AdminLoginPage = () => {
         // Check if user is admin or super admin
         if (result.user.role === 'ADMIN' || result.user.role === 'SUPER_ADMIN') {
           console.log('✅ User is admin, navigating to /admin/dashboard');
-          
-          // Small delay to ensure localStorage is set
-          await new Promise(resolve => setTimeout(resolve, 100));
-          
+          // Navigate immediately - AuthContext already updated the state
           navigate('/admin/dashboard', { replace: true });
         } else {
           console.log('❌ User is not admin, role:', result.user.role);
