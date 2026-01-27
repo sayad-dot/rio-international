@@ -87,7 +87,7 @@ const server = app.listen(PORT, async () => {
   console.log(`
 ╔════════════════════════════════════════════════╗
 ║                                                ║
-║   🌍 Rio International Travel Agency API       ║
+║   🌍 Rio Tours & Travels API                    ║
 ║                                                ║
 ║   Environment: ${config.nodeEnv.toUpperCase().padEnd(34)}║
 ║   Port: ${PORT.toString().padEnd(40)}║

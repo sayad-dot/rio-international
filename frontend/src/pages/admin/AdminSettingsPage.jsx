@@ -13,7 +13,7 @@ const AdminSettingsPage = () => {
 
   const [settings, setSettings] = useState({
     // General Settings
-    siteName: 'Rio International Travel Agency',
+    siteName: 'Rio Tours & Travels',
     siteEmail: 'info@riointernational.com',
     supportPhone: '+1 234 567 8900',
     companyAddress: '123 Travel Street, Dubai, UAE',

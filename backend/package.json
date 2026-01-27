@@ -1,7 +1,7 @@
 {
   "name": "rio-international-backend",
   "version": "1.0.0",
-  "description": "Backend API for Rio International Travel Agency",
+  "description": "Backend API for Rio Tours & Travels",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
@@ -21,7 +21,7 @@
     "booking",
     "tours"
   ],
-  "author": "Rio International",
+  "author": "Rio Tours & Travels",
   "license": "MIT",
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",

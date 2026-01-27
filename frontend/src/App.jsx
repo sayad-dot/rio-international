@@ -17,6 +17,9 @@ import VisaPackagesPage from './pages/VisaPackagesPage';
 import VisaDetailsPage from './pages/VisaDetailsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import FlightBookingPage from './pages/FlightBookingPage';
+import HotelReservationPage from './pages/HotelReservationPage';
+import CareerPage from './pages/CareerPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import AdminLoginPage from './pages/auth/AdminLoginPage';
@@ -70,6 +73,9 @@ function App() {
               <Route path="tours/:id" element={<TourDetailsPage />} />
               <Route path="visa-packages" element={<VisaPackagesPage />} />
               <Route path="visa/:slug" element={<VisaDetailsPage />} />
+              <Route path="flight-booking" element={<FlightBookingPage />} />
+              <Route path="hotel-reservation" element={<HotelReservationPage />} />
+              <Route path="career" element={<CareerPage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="login" element={<LoginPage />} />

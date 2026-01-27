@@ -230,7 +230,7 @@ const ContactPage = () => {
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Rio International Location"
+                  title="Rio Tours & Travels Location"
                 />
               </div>
 

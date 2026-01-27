@@ -6,7 +6,7 @@ export const API_CONFIG = {
 
 // App Configuration
 export const APP_CONFIG = {
-  NAME: 'Rio International',
+  NAME: 'Rio Tours & Travels',
   DESCRIPTION: 'Your trusted travel partner in Bangladesh',
   CONTACT: {
     PHONE: '+880 1XXX-XXXXXX',

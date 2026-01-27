@@ -132,7 +132,7 @@ const AdminRegisterPage = () => {
             <div className="text-sm text-blue-400">
               <p className="font-semibold mb-1">Employee ID Required</p>
               <p>
-                You must have a valid employee ID provided by RIO International management to register as an admin.
+                You must have a valid employee ID provided by Rio Tours & Travels management to register as an admin.
               </p>
             </div>
           </div>
@@ -302,7 +302,7 @@ const AdminRegisterPage = () => {
         {/* Footer */}
         <div className="text-center mt-6">
           <p className="text-slate-500 text-sm">
-            © 2026 RIO International Travel Agency. All rights reserved.
+            © 2026 Rio Tours & Travels. All rights reserved.
           </p>
         </div>
       </div>

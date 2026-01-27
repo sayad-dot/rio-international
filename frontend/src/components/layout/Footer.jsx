@@ -12,7 +12,7 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h3 className="text-white text-lg sm:text-xl font-bold mb-3 sm:mb-4 font-display">
-              Rio International
+              Rio Tours & Travels
             </h3>
             <p className="text-xs sm:text-sm mb-3 sm:mb-4">
               Your trusted travel partner in Bangladesh. We specialize in creating unforgettable
@@ -128,7 +128,7 @@ const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
           <div className="flex flex-col md:flex-row justify-between items-center text-xs sm:text-sm gap-3 sm:gap-0">
-            <p className="text-center md:text-left">&copy; {currentYear} Rio International. All rights reserved.</p>
+            <p className="text-center md:text-left">&copy; {currentYear} Rio Tours & Travels. All rights reserved.</p>
             <div className="flex gap-4 sm:gap-6">
               <Link to="/privacy" className="hover:text-white transition-colors">
                 Privacy Policy

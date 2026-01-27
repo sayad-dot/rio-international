@@ -133,7 +133,7 @@ app.post('/api/seed', async (req, res) => {
 app.get('/api', (req, res) => {
   res.json({
     success: true,
-    message: 'Rio International Travel Agency API',
+    message: 'Rio Tours & Travels API',
     version: '1.0.0',
   });
 });

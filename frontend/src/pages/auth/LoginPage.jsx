@@ -139,7 +139,7 @@ const LoginPage = () => {
                   <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">New to Rio International?</span>
+                  <span className="px-4 bg-white text-gray-500">New to Rio Tours & Travels?</span>
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ const LoginPage = () => {
               Your Journey Starts Here
             </h2>
             <p className="text-xl text-gray-200 mb-8">
-              Access exclusive travel deals, manage bookings, and plan your perfect getaway with Rio International.
+              Access exclusive travel deals, manage bookings, and plan your perfect getaway with Rio Tours & Travels.
             </p>
             
             <div className="space-y-4">

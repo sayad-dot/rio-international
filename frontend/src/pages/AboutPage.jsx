@@ -43,7 +43,7 @@ const AboutPage = () => {
       name: 'Ahmed Rahman',
       role: 'Founder & CEO',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
-      description: 'Leading Rio International with 15+ years of travel industry experience.'
+      description: 'Leading Rio Tours & Travels with 15+ years of travel industry experience.'
     },
     {
       name: 'Fatima Khatun',
@@ -74,7 +74,7 @@ const AboutPage = () => {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-display">
-              About <span className="text-primary-400">Rio International</span>
+              About <span className="text-primary-400">Rio Tours & Travels</span>
             </h1>
             <p className="text-xl text-gray-200 mb-8">
               Your trusted partner for unforgettable travel experiences since 2010. 
@@ -111,7 +111,7 @@ const AboutPage = () => {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
-                  Founded in 2010, Rio International started with a simple vision: to make 
+                  Founded in 2010, Rio Tours & Travels started with a simple vision: to make 
                   travel accessible, affordable, and memorable for everyone. What began as a 
                   small travel agency in Dhaka has grown into Bangladesh's leading tour operator.
                 </p>
@@ -229,7 +229,7 @@ const AboutPage = () => {
       <section className="py-16 bg-gradient-to-r from-primary-600 to-primary-700">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-display">
-            Why Choose Rio International?
+            Why Choose Rio Tours & Travels?
           </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="glass p-6 rounded-2xl">

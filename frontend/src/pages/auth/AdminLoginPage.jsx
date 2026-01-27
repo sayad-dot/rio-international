@@ -162,7 +162,7 @@ const AdminLoginPage = () => {
         {/* Footer */}
         <div className="text-center mt-6">
           <p className="text-slate-500 text-sm">
-            © 2026 RIO International Travel Agency. All rights reserved.
+            © 2026 Rio Tours & Travels. All rights reserved.
           </p>
         </div>
       </div>

@@ -89,7 +89,7 @@ const RegisterPage = () => {
         <div className="relative z-10 flex flex-col justify-center p-12 text-white">
           <div className="max-w-lg">
             <h2 className="text-4xl font-bold mb-6 font-display">
-              Join Rio International
+              Join Rio Tours & Travels
             </h2>
             <p className="text-xl text-gray-200 mb-8">
               Create your account and unlock exclusive travel experiences across the globe.
