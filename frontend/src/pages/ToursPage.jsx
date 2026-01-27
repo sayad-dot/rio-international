@@ -392,7 +392,7 @@ const ToursPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -401,37 +401,37 @@ const ToursPage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-dark-900/80" />
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-display">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 font-display">
               Explore Our <span className="text-primary-400">Tour Packages</span>
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8">
               Discover amazing destinations with our carefully curated travel packages. 
               From beach getaways to spiritual journeys, we have something for everyone.
             </p>
 
             {/* Search Bar */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-4">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search destinations, tours..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                   />
                 </div>
                 <button 
                   onClick={() => setShowFilters(!showFilters)}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium text-gray-700 transition-all md:hidden"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium text-sm sm:text-base text-gray-700 transition-all sm:hidden min-h-[44px]"
                 >
-                  <SlidersHorizontal className="h-5 w-5" />
+                  <SlidersHorizontal className="h-4 w-4 sm:h-5 sm:w-5" />
                   Filters
                 </button>
-                <button className="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+                <button className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl text-sm sm:text-base font-semibold hover:shadow-lg transition-all min-h-[44px]">
                   Search
                 </button>
               </div>
@@ -441,9 +441,9 @@ const ToursPage = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-8">
+      <section className="py-8 sm:py-10 md:py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
             {/* Sidebar Filters - Desktop */}
             <aside className={`lg:w-72 flex-shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}>
               <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">

@@ -368,7 +368,7 @@ const VisaPackagesPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -377,35 +377,35 @@ const VisaPackagesPage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-dark-900/80" />
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <Plane className="h-4 w-4 text-primary-300" />
-              <span className="text-white text-sm font-medium">Visa Services</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6">
+              <Plane className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary-300" />
+              <span className="text-white text-xs sm:text-sm font-medium">Visa Services</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-display">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 font-display">
               Get Your <span className="text-primary-400">Visa</span> Hassle-Free
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8">
               Expert visa assistance for 50+ countries. Fast processing, high success rate, 
               and comprehensive support throughout your application.
             </p>
 
             {/* Search Bar */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-4">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search countries or visa types..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base bg-gray-50 border-2 border-gray-100 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                   />
                 </div>
-                <button className="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+                <button className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl text-sm sm:text-base font-semibold hover:shadow-lg transition-all min-h-[44px]">
                   Search Visas
                 </button>
               </div>
@@ -415,17 +415,17 @@ const VisaPackagesPage = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="py-8 sm:py-10 md:py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {benefits.map((benefit, idx) => (
-              <div key={idx} className="flex items-start gap-4 p-6 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-all">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${benefit.color} flex items-center justify-center flex-shrink-0`}>
-                  <benefit.icon className="h-6 w-6 text-white" />
+              <div key={idx} className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gray-50 hover:bg-gray-100 transition-all">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${benefit.color} flex items-center justify-center flex-shrink-0`}>
+                  <benefit.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">{benefit.title}</h3>
-                  <p className="text-sm text-gray-600">{benefit.description}</p>
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1">{benefit.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">{benefit.description}</p>
                 </div>
               </div>
             ))}
@@ -434,22 +434,22 @@ const VisaPackagesPage = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="py-8 sm:py-10 md:py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Category Filter */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-3">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap scrollbar-hide">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                  className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-medium transition-all whitespace-nowrap min-h-[44px] ${
                     selectedCategory === cat.id 
                       ? 'bg-primary-600 text-white shadow-lg' 
                       : 'bg-white text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  <cat.icon className="h-5 w-5" />
+                  <cat.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   {cat.name}
                 </button>
               ))}
