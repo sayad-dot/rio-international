@@ -52,6 +52,24 @@ if (config.nodeEnv === 'development') {
   app.use(morgan('combined'));
 }
 
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Rio International Tours & Travels API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      api: '/api',
+      tours: '/api/tours',
+      visa: '/api/visa',
+      jobs: '/api/jobs',
+      auth: '/api/auth',
+      admin: '/api/admin'
+    }
+  });
+});
+
 // Health check route
 app.get('/health', (req, res) => {
   res.status(200).json({
