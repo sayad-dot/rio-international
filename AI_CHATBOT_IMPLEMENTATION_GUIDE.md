@@ -322,7 +322,7 @@ GOOGLE_GEMINI_API_KEY=your_api_key_here
 # No credit card required!
 ```
 
-my gemini api key: AIzaSyCL6C2POwPytMfVXpliRyNoJVjVARZiiLs
+
 
 ### Step 3: Create Vector Store Service
 
